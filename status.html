@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Check Report Status - Report Safe</title>
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Tailwind Config -->
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#0a1f43",
+                        "background-light": "#f6f7f8",
+                        "background-dark": "#111721",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-[#111417] dark:text-white min-h-screen flex flex-col overflow-x-hidden">
+<!-- TopNavBar -->
+<header class="sticky top-0 z-50 flex items-center justify-between whitespace-nowrap border-b border-solid border-b-[#e5e7eb] dark:border-gray-800 bg-white dark:bg-[#111721] px-4 md:px-10 py-3 shadow-sm">
+<div class="flex items-center gap-4">
+<div class="size-8 text-primary dark:text-white">
+<span class="material-symbols-outlined text-3xl">shield_person</span>
+</div>
+<h2 class="text-primary dark:text-white text-lg font-bold leading-tight tracking-tight">Report Safe</h2>
+</div>
+<button id="quickExitButton" class="group flex min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-red-600 hover:bg-red-700 text-white text-sm font-bold leading-normal tracking-wide transition-colors">
+<span class="material-symbols-outlined mr-2 text-lg">exit_to_app</span>
+<span class="truncate">Quick Exit</span>
+</button>
+</header>
+<main class="flex-1 flex flex-col items-center py-8 px-4 sm:px-6 lg:px-8">
+<div class="w-full max-w-[960px] flex flex-col gap-8">
+<!-- Page Heading & Intro -->
+<div class="flex flex-col gap-3 text-center md:text-left">
+<h1 class="text-primary dark:text-white text-3xl md:text-4xl font-black leading-tight tracking-tight">Check Report Status</h1>
+<p class="text-[#647187] dark:text-gray-400 text-base font-normal leading-relaxed max-w-3xl">
+                    Enter your unique Case ID and the Secret Key provided when you submitted your report. This secure portal allows you to view status updates and communicate anonymously with the case manager.
+                </p>
+</div>
+<!-- Authentication Card -->
+<div class="bg-white dark:bg-[#1a2230] rounded-xl shadow-sm border border-[#e5e7eb] dark:border-gray-800 p-6 md:p-8">
+<div class="grid grid-cols-1 md:grid-cols-12 gap-6 items-end">
+<!-- Case ID Input -->
+<div class="md:col-span-5 flex flex-col gap-2">
+<label class="text-[#111417] dark:text-gray-200 text-sm font-bold leading-normal">Case Reference ID</label>
+<div class="flex w-full items-center rounded-lg border border-[#dcdfe5] dark:border-gray-700 bg-white dark:bg-[#111721] focus-within:ring-2 focus-within:ring-primary focus-within:border-primary overflow-hidden transition-all">
+<input class="flex-1 bg-transparent border-none h-12 px-4 text-[#111417] dark:text-white placeholder:text-[#9ca3af] focus:ring-0 text-base" placeholder="#123-456" type="text"/>
+<div class="px-3 text-[#647187]">
+<span class="material-symbols-outlined">tag</span>
+</div>
+</div>
+</div>
+<!-- Secret Key Input -->
+<div class="md:col-span-5 flex flex-col gap-2">
+<label class="text-[#111417] dark:text-gray-200 text-sm font-bold leading-normal">Private Access Key</label>
+<div class="flex w-full items-center rounded-lg border border-[#dcdfe5] dark:border-gray-700 bg-white dark:bg-[#111721] focus-within:ring-2 focus-within:ring-primary focus-within:border-primary overflow-hidden transition-all">
+<input class="flex-1 bg-transparent border-none h-12 px-4 text-[#111417] dark:text-white placeholder:text-[#9ca3af] focus:ring-0 text-base" placeholder="abc123xyz" type="password"/>
+<div class="px-3 text-[#647187]">
+<span class="material-symbols-outlined">vpn_key</span>
+</div>
+</div>
+</div>
+<!-- Check Button -->
+<div class="md:col-span-2">
+<button class="w-full flex cursor-pointer items-center justify-center rounded-lg h-12 px-4 bg-primary hover:bg-[#0d2b5e] text-white text-base font-bold transition-colors shadow-sm" id="checkStatusButton">
+                            Check
+                        </button>
+</div>
+</div>
+<div class="mt-4 flex items-center gap-2 text-xs text-[#647187] dark:text-gray-500">
+<span class="material-symbols-outlined text-sm">lock</span>
+<span>Your connection is end-to-end encrypted. No IP logs are stored.</span>
+</div>
+</div>
+<!-- RESULT SECTION: Status Dashboard (Visualized as visible) -->
+<div class="flex flex-col gap-6 animate-fade-in">
+<!-- Status Badge Header -->
+<div class="bg-white dark:bg-[#1a2230] rounded-xl p-6 border border-[#e5e7eb] dark:border-gray-800 flex flex-wrap justify-between items-center gap-4 shadow-sm">
+<div class="flex flex-col">
+<span class="text-sm text-[#647187] dark:text-gray-400 font-medium">Current Status</span>
+<div class="flex items-center gap-3 mt-1">
+<div class="bg-amber-100 dark:bg-amber-900/30 text-amber-700 dark:text-amber-400 px-3 py-1 rounded-full text-sm font-bold flex items-center gap-2 border border-amber-200 dark:border-amber-800">
+<span class="block size-2 rounded-full bg-amber-500 animate-pulse"></span>
+                                Under Review
+                            </div>
+<span class="text-xs text-[#647187] dark:text-gray-500">Last updated: 2 hours ago</span>
+</div>
+</div>
+<div class="flex gap-3">
+<button class="text-[#647187] hover:text-primary dark:hover:text-white font-medium text-sm flex items-center gap-1 transition-colors" id="refreshButton">
+<span class="material-symbols-outlined text-lg">refresh</span> Refresh
+                         </button>
+</div>
+</div>
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+<!-- Left Column: Timeline -->
+<div class="lg:col-span-1 bg-white dark:bg-[#1a2230] rounded-xl p-6 border border-[#e5e7eb] dark:border-gray-800 shadow-sm h-fit">
+<h3 class="text-[#111417] dark:text-white text-lg font-bold mb-6 flex items-center gap-2">
+<span class="material-symbols-outlined text-primary dark:text-white">history</span>
+                            Case History
+                        </h3>
+<div class="relative pl-4 border-l-2 border-[#e5e7eb] dark:border-gray-700 space-y-8">
+<!-- Item 1 (Active) -->
+<div class="relative">
+<div class="absolute -left-[21px] top-1 size-3 bg-amber-500 rounded-full border-2 border-white dark:border-[#1a2230]"></div>
+<div class="flex flex-col gap-1">
+<p class="text-sm font-bold text-[#111417] dark:text-white">Under Investigation</p>
+<p class="text-xs text-[#647187] dark:text-gray-400">Oct 24, 2023 - 09:15 AM</p>
+<p class="text-sm text-[#647187] dark:text-gray-400 mt-1">A case manager has been assigned and is reviewing the evidence provided.</p>
+</div>
+</div>
+<!-- Item 2 -->
+<div class="relative">
+<div class="absolute -left-[21px] top-1 size-3 bg-primary rounded-full border-2 border-white dark:border-[#1a2230]"></div>
+<div class="flex flex-col gap-1">
+<p class="text-sm font-bold text-[#111417] dark:text-white">Report Received</p>
+<p class="text-xs text-[#647187] dark:text-gray-400">Oct 23, 2023 - 04:30 PM</p>
+<p class="text-sm text-[#647187] dark:text-gray-400 mt-1">Your secure report was successfully uploaded to the server.</p>
+</div>
+</div>
+<!-- Item 3 -->
+<div class="relative">
+<div class="absolute -left-[21px] top-1 size-3 bg-[#dcdfe5] dark:bg-gray-600 rounded-full border-2 border-white dark:border-[#1a2230]"></div>
+<div class="flex flex-col gap-1">
+<p class="text-sm font-bold text-[#111417] dark:text-white">Submission Created</p>
+<p class="text-xs text-[#647187] dark:text-gray-400">Oct 23, 2023 - 04:15 PM</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Right Column: Secure Messages -->
+<div class="lg:col-span-2 flex flex-col gap-4">
+<div class="bg-white dark:bg-[#1a2230] rounded-xl border border-[#e5e7eb] dark:border-gray-800 shadow-sm flex flex-col overflow-hidden">
+<div class="p-4 border-b border-[#e5e7eb] dark:border-gray-800 bg-[#f8f9fa] dark:bg-[#151c27] flex justify-between items-center">
+<h3 class="text-[#111417] dark:text-white text-lg font-bold flex items-center gap-2">
+<span class="material-symbols-outlined text-primary dark:text-white">forum</span>
+                                    Secure Messages
+                                </h3>
+<span class="text-xs bg-green-100 text-green-700 px-2 py-1 rounded border border-green-200 font-medium">Encrypted</span>
+</div>
+<!-- Message Stream -->
+<div class="p-6 flex flex-col gap-6 max-h-[500px] overflow-y-auto bg-white dark:bg-[#1a2230]">
+<!-- Admin Message -->
+<div class="flex gap-4">
+<div class="size-10 rounded-full bg-[#e5e7eb] dark:bg-gray-700 flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-[#647187] dark:text-gray-300">support_agent</span>
+</div>
+<div class="flex flex-col gap-1 max-w-[85%]">
+<div class="flex items-baseline gap-2">
+<span class="text-sm font-bold text-[#111417] dark:text-white">Case Manager</span>
+<span class="text-xs text-[#647187] dark:text-gray-500">Yesterday, 10:00 AM</span>
+</div>
+<div class="bg-[#f0f2f4] dark:bg-gray-800 p-4 rounded-2xl rounded-tl-none text-sm text-[#111417] dark:text-gray-200 leading-relaxed border border-transparent dark:border-gray-700">
+                                            Thank you for your report. We have begun the preliminary review. Could you please clarify if there were any other witnesses present during the incident mentioned in Section 2?
+                                        </div>
+</div>
+</div>
+<!-- User Message -->
+<div class="flex flex-row-reverse gap-4">
+<div class="size-10 rounded-full bg-primary/10 dark:bg-primary/30 flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-primary dark:text-blue-300">person</span>
+</div>
+<div class="flex flex-col gap-1 items-end max-w-[85%]">
+<div class="flex items-baseline gap-2">
+<span class="text-sm font-bold text-[#111417] dark:text-white">You (Anonymous)</span>
+<span class="text-xs text-[#647187] dark:text-gray-500">Today, 09:24 AM</span>
+</div>
+<div class="bg-primary text-white p-4 rounded-2xl rounded-tr-none text-sm leading-relaxed shadow-sm">
+                                            Yes, two of my colleagues from the finance department were in the room. I can try to provide their names if that helps, but I'm worried about them being targeted.
+                                        </div>
+</div>
+</div>
+</div>
+<!-- Reply Area -->
+<div class="p-4 bg-[#f8f9fa] dark:bg-[#151c27] border-t border-[#e5e7eb] dark:border-gray-800">
+<label class="sr-only" for="reply">Reply</label>
+<div class="relative">
+<textarea class="w-full rounded-lg border border-[#dcdfe5] dark:border-gray-700 bg-white dark:bg-[#111721] p-3 pr-12 text-sm text-[#111417] dark:text-white placeholder:text-[#9ca3af] focus:ring-2 focus:ring-primary focus:border-primary resize-none" id="reply" placeholder="Type your reply securely..." rows="3"></textarea>
+<div class="absolute bottom-3 right-3 text-[#647187]">
+<span class="material-symbols-outlined text-[20px]">lock</span>
+</div>
+</div>
+<div class="flex justify-between items-center mt-3">
+<p class="text-xs text-[#647187] dark:text-gray-500 flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px] text-green-600">check_circle</span>
+                                        Your reply will be anonymized before sending.
+                                    </p>
+<button class="flex items-center justify-center rounded-lg h-10 px-6 bg-primary hover:bg-[#0d2b5e] text-white text-sm font-bold transition-colors shadow-sm" id="sendReplyButton">
+                                        Send Reply
+                                    </button>
+</div>
+</div>
+</div>
+<!-- Attachments Card (Optional Extra) -->
+<div class="bg-white dark:bg-[#1a2230] rounded-xl border border-[#e5e7eb] dark:border-gray-800 p-4 shadow-sm">
+<h4 class="text-sm font-bold text-[#111417] dark:text-white mb-3">Additional Files</h4>
+<div class="flex items-center gap-4">
+<button class="flex items-center gap-2 px-4 py-2 rounded-lg border border-dashed border-[#dcdfe5] dark:border-gray-600 text-[#647187] hover:text-primary dark:hover:text-white hover:border-primary transition-all text-sm font-medium w-full justify-center">
+<span class="material-symbols-outlined">upload_file</span>
+                                    Upload new evidence
+                                </button>
+</div>
+</div>
+</div>
+</div>
+</main>
+<footer class="mt-auto border-t border-[#e5e7eb] dark:border-gray-800 py-6 text-center text-[#647187]">
+<div class="flex justify-center items-center gap-2 mb-2">
+<span class="material-symbols-outlined text-lg">shield</span>
+<span class="text-sm font-medium">Report Safe Secure System</span>
+</div>
+<p class="text-xs">© 2023 Report Safe. All rights reserved. • <a class="underline hover:text-primary" href="#">Privacy Policy</a></p>
+</footer>
+<script src="status.js"></script>
+<script src="navigation.js"></script>
+<script>
+    // Add event listener for quick exit button
+    document.addEventListener('DOMContentLoaded', function() {
+        var quickExitButton = document.getElementById('quickExitButton');
+        if (quickExitButton) {
+            quickExitButton.addEventListener('click', function() {
+                window.location.href = 'index.html';
+            });
+        }
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Report Safe - Anonymous Reporting</title>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Theme Configuration -->
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#0a1f43",
+                        "background-light": "#f6f7f8",
+                        "background-dark": "#111721",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem", 
+                        "lg": "0.5rem", 
+                        "xl": "0.75rem", 
+                        "2xl": "1rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        /* Custom scrollbar for better aesthetics */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent; 
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1; 
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8; 
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-[#111417] dark:text-white transition-colors duration-200">
+<div class="relative flex min-h-screen w-full flex-col overflow-x-hidden">
+<!-- Sticky Header -->
+<header class="sticky top-0 z-50 flex items-center justify-between border-b border-solid border-b-[#f0f2f4] dark:border-slate-800 bg-white dark:bg-slate-900 px-6 py-3 shadow-sm lg:px-10">
+<div class="flex items-center gap-4">
+<div class="flex items-center justify-center size-10 rounded-full bg-primary/10 dark:bg-white/10 text-primary dark:text-white">
+<span class="material-symbols-outlined text-2xl">shield_lock</span>
+</div>
+<h2 class="text-[#111417] dark:text-white text-lg font-bold leading-tight tracking-[-0.015em]">Report Safe</h2>
+</div>
+<button id="quickExitButton" class="flex min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-primary hover:bg-primary/90 text-white text-sm font-bold leading-normal tracking-[0.015em] transition-colors">
+<span class="mr-2 material-symbols-outlined text-lg">logout</span>
+<span class="truncate">Exit Quickly</span>
+</button>
+</header>
+<!-- Main Content Area -->
+<main class="layout-container flex h-full grow flex-col py-8 px-4 sm:px-6 lg:px-8">
+<div class="flex flex-1 justify-center">
+<div class="layout-content-container flex flex-col w-full max-w-[800px]">
+<!-- Page Heading & Subheading -->
+<div class="flex flex-col gap-2 mb-6">
+<h1 class="text-[#111417] dark:text-white text-3xl sm:text-4xl font-black leading-tight tracking-[-0.033em]">Submit a Secure Report</h1>
+<p class="text-[#647187] dark:text-slate-400 text-base font-normal leading-normal">Your safety is our priority. Please fill out the details below carefully.</p>
+</div>
+<!-- Trust Banner -->
+<div class="mb-8 rounded-xl bg-[#e8f0fe] dark:bg-primary/20 border border-blue-100 dark:border-primary/30 p-4 flex items-start gap-3">
+<span class="material-symbols-outlined text-primary dark:text-blue-300 mt-0.5">verified_user</span>
+<div>
+<p class="text-[#0a1f43] dark:text-blue-100 text-sm font-bold">Anonymity Guaranteed</p>
+<p class="text-[#111417] dark:text-slate-300 text-sm font-normal leading-normal">No login required. No identity collected. Your IP address is not logged.</p>
+</div>
+</div>
+<!-- Form Card -->
+<div class="bg-white dark:bg-slate-800 rounded-xl shadow-sm border border-[#dcdfe5] dark:border-slate-700 overflow-hidden">
+<!-- Progress Bar -->
+<div class="px-6 pt-6 pb-2">
+<div class="flex flex-col gap-3">
+<div class="flex gap-6 justify-between items-center">
+<p class="text-[#111417] dark:text-white text-sm font-medium leading-normal">Step 1 of 3: Incident Details</p>
+<span class="text-xs text-[#647187] dark:text-slate-400">33% Completed</span>
+</div>
+<div class="rounded-full bg-[#dcdfe5] dark:bg-slate-600 h-2 w-full overflow-hidden">
+<div class="h-full rounded-full bg-primary dark:bg-blue-500 transition-all duration-500" style="width: 33%;"></div>
+</div>
+</div>
+</div>
+<form class="p-6 flex flex-col gap-6" id="reportForm">
+<!-- Issue Category Dropdown -->
+<div class="flex flex-col gap-2">
+<label class="text-[#111417] dark:text-white text-base font-medium leading-normal" for="category">Issue Category</label>
+<div class="relative">
+<select class="w-full appearance-none rounded-lg border border-[#dcdfe5] dark:border-slate-600 bg-white dark:bg-slate-900 text-[#111417] dark:text-white focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary h-14 px-4 text-base transition-shadow cursor-pointer" id="category">
+<option disabled="" selected="" value="">Select the type of issue</option>
+<option value="harassment">Harassment or Bullying</option>
+<option value="fraud">Fraud or Theft</option>
+<option value="safety">Safety Violation</option>
+<option value="discrimination">Discrimination</option>
+<option value="other">Other</option>
+</select>
+<div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4 text-[#647187]">
+<span class="material-symbols-outlined">expand_more</span>
+</div>
+</div>
+</div>
+<!-- Incident Description Textarea -->
+<div class="flex flex-col gap-2">
+<label class="text-[#111417] dark:text-white text-base font-medium leading-normal" for="description">
+                                    Incident Description
+                                    <span class="text-[#647187] dark:text-slate-400 font-normal text-sm ml-1">(Required)</span>
+</label>
+<textarea class="w-full rounded-lg border border-[#dcdfe5] dark:border-slate-600 bg-white dark:bg-slate-900 text-[#111417] dark:text-white placeholder-[#647187] focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary p-4 text-base resize-y min-h-[140px]" id="description" placeholder="Please describe what happened, including dates, times, and any witnesses. Be as specific as possible." rows="5"></textarea>
+</div>
+<!-- Department Input (Optional) -->
+<div class="flex flex-col gap-2">
+<label class="text-[#111417] dark:text-white text-base font-medium leading-normal" for="department">
+                                    Department or Location
+                                    <span class="text-[#647187] dark:text-slate-400 font-normal text-sm ml-1">(Optional)</span>
+</label>
+<input class="w-full rounded-lg border border-[#dcdfe5] dark:border-slate-600 bg-white dark:bg-slate-900 text-[#111417] dark:text-white placeholder-[#647187] focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary h-14 px-4 text-base" id="department" placeholder="e.g. Marketing, 3rd Floor, Warehouse B" type="text"/>
+</div>
+<!-- File Upload (Optional) -->
+<div class="flex flex-col gap-2">
+<span class="text-[#111417] dark:text-white text-base font-medium leading-normal">
+                                    Evidence
+                                    <span class="text-[#647187] dark:text-slate-400 font-normal text-sm ml-1">(Optional)</span>
+</span>
+<div class="relative flex flex-col items-center justify-center w-full h-32 rounded-lg border-2 border-dashed border-[#dcdfe5] dark:border-slate-600 bg-[#f8f9fa] dark:bg-slate-900/50 hover:bg-[#f0f2f4] dark:hover:bg-slate-800 transition-colors cursor-pointer group">
+<input class="absolute inset-0 w-full h-full opacity-0 cursor-pointer" multiple="" type="file"/>
+<div class="flex flex-col items-center justify-center pt-5 pb-6 text-center">
+<span class="material-symbols-outlined text-[#647187] group-hover:text-primary mb-2 text-3xl transition-colors">cloud_upload</span>
+<p class="mb-1 text-sm text-[#111417] dark:text-slate-300 font-medium">Click to upload or drag and drop</p>
+<p class="text-xs text-[#647187]">SVG, PNG, JPG or PDF (MAX. 10MB)</p>
+</div>
+</div>
+</div>
+</form>
+<!-- Action Panel -->
+<div class="p-6 border-t border-[#f0f2f4] dark:border-slate-700 bg-[#fcfcfd] dark:bg-slate-800/50 flex flex-col-reverse sm:flex-row items-center justify-between gap-4">
+<a class="text-[#647187] hover:text-[#111417] dark:text-slate-400 dark:hover:text-white text-sm font-medium transition-colors" href="#">Cancel Report</a>
+<button class="w-full sm:w-auto flex items-center justify-center gap-2 rounded-lg bg-primary hover:bg-[#0d2b5e] text-white h-12 px-8 text-base font-bold shadow-md hover:shadow-lg transition-all transform active:scale-95" id="submitReportButton" type="submit">
+<span>Submit Report</span>
+<span class="material-symbols-outlined text-sm">arrow_forward</span>
+</button>
+</div>
+</div>
+<!-- Footer -->
+<footer class="mt-12 mb-6 flex flex-col items-center gap-4">
+<div class="flex gap-6 text-sm text-[#647187] dark:text-slate-500">
+<a class="hover:underline" href="#">Privacy Policy</a>
+<a class="hover:underline" href="#">How it works</a>
+<a class="hover:underline" href="#">Support</a>
+</div>
+<div class="flex items-center gap-2 text-xs text-[#9aa2b1] dark:text-slate-600">
+<span class="material-symbols-outlined text-[16px]">lock</span>
+<span>Securely encrypted with 256-bit AES</span>
+</div>
+</footer>
+</div>
+</div>
+</main>
+<script src="report.js"></script>
+<script src="navigation.js"></script>
+<script>
+    // Add event listener for quick exit button
+    document.addEventListener('DOMContentLoaded', function() {
+        var quickExitButton = document.getElementById('quickExitButton');
+        if (quickExitButton) {
+            quickExitButton.addEventListener('click', function() {
+                window.location.href = 'index.html';
+            });
+        }
+    });
+</script>
+</div>
+<!-- Script to simulate loading state or basic interactions can be added here if needed, but forbidden by constraints -->
+</body></html>

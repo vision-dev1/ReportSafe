@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Report Safe - Anonymous Workplace Reporting</title>
+<!-- Google Fonts: Inter -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#0a1f43",
+                        "primary-hover": "#152e5a",
+                        "background-light": "#f8fafc", /* Very subtle gray for page bg */
+                        "background-dark": "#111721",
+                        "surface-white": "#ffffff",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"],
+                        "sans": ["Inter", "sans-serif"],
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.375rem", 
+                        "lg": "0.5rem", 
+                        "xl": "0.75rem", 
+                        "2xl": "1rem",
+                        "full": "9999px"
+                    },
+                    boxShadow: {
+                        "soft": "0 4px 6px -1px rgba(10, 31, 67, 0.05), 0 2px 4px -1px rgba(10, 31, 67, 0.03)",
+                        "card": "0 10px 15px -3px rgba(0, 0, 0, 0.05), 0 4px 6px -2px rgba(0, 0, 0, 0.025)",
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+</head>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-[#111417] antialiased">
+<div class="relative flex min-h-screen w-full flex-col group/design-root overflow-x-hidden">
+<!-- TopNavBar -->
+<header class="sticky top-0 z-50 w-full bg-primary border-b border-[#1c355e] shadow-sm">
+<div class="layout-container flex h-full flex-col">
+<div class="w-full flex justify-center">
+<div class="layout-content-container flex flex-col w-full max-w-[1200px] px-4 md:px-10">
+<div class="flex items-center justify-between h-16 md:h-20">
+<div class="flex items-center gap-3 text-white">
+<div class="size-8 flex items-center justify-center">
+<span class="material-symbols-outlined text-[32px]">shield</span>
+</div>
+<h2 class="text-white text-xl font-bold leading-tight tracking-tight">Report Safe</h2>
+</div>
+<button class="flex min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-6 bg-white/10 hover:bg-white/20 transition-colors text-white text-sm font-bold leading-normal tracking-wide border border-white/20">
+<span class="truncate">Employer Login</span>
+</button>
+</div>
+</div>
+</div>
+</header>
+<main class="flex-1 flex flex-col">
+<!-- HeroSection with Action Cards -->
+<section class="w-full flex justify-center py-12 md:py-20 lg:py-24 bg-gradient-to-b from-primary/5 to-transparent">
+<div class="layout-content-container flex flex-col w-full max-w-[960px] px-4 md:px-10 gap-12">
+<!-- Headline -->
+<div class="flex flex-col gap-4 text-center items-center max-w-[720px] mx-auto">
+<h1 class="text-primary dark:text-white text-4xl md:text-5xl lg:text-6xl font-black leading-[1.1] tracking-tight">
+                        Speak Up Safely &amp; Anonymously
+                    </h1>
+<h2 class="text-[#647187] text-lg md:text-xl font-normal leading-relaxed max-w-[600px]">
+                        Your voice matters. Securely report workplace misconduct without revealing your identity.
+                    </h2>
+</div>
+<!-- Action Cards -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 w-full">
+<!-- Primary Card: Report -->
+<div class="group relative flex flex-col items-start gap-6 rounded-2xl bg-surface-white p-8 shadow-card hover:shadow-lg transition-all border border-gray-100 hover:border-primary/20">
+<div class="size-14 rounded-full bg-primary/10 flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-[32px]">campaign</span>
+</div>
+<div class="flex flex-col gap-2">
+<h3 class="text-2xl font-bold text-primary">Report an Issue</h3>
+<p class="text-[#647187] leading-relaxed">Submit a new report securely. No personal data is collected unless you choose to share it.</p>
+</div>
+<button id="startReportButton" class="mt-auto w-full flex items-center justify-center rounded-xl h-12 px-6 bg-primary hover:bg-primary-hover text-white text-base font-bold transition-colors shadow-soft">
+                            Start a New Report
+                        </button>
+</div>
+<!-- Secondary Card: Status -->
+<div class="group relative flex flex-col items-start gap-6 rounded-2xl bg-surface-white p-8 shadow-card hover:shadow-lg transition-all border border-gray-100 hover:border-primary/20">
+<div class="size-14 rounded-full bg-[#f0f2f4] flex items-center justify-center text-[#647187]">
+<span class="material-symbols-outlined text-[32px]">search</span>
+</div>
+<div class="flex flex-col gap-2">
+<h3 class="text-2xl font-bold text-[#111417]">Check Report Status</h3>
+<p class="text-[#647187] leading-relaxed">Already submitted a report? Use your access key to check for updates or respond to questions.</p>
+</div>
+<button id="checkStatusButton" class="mt-auto w-full flex items-center justify-center rounded-xl h-12 px-6 bg-white border-2 border-[#e5e7eb] hover:border-primary/50 text-primary text-base font-bold transition-colors">
+                            Check Status
+                        </button>
+</div>
+</div>
+</div>
+</section>
+<!-- FeatureSection: Trust Indicators -->
+<section class="w-full flex justify-center py-16 bg-surface-white border-t border-gray-100">
+<div class="layout-content-container flex flex-col w-full max-w-[960px] px-4 md:px-10">
+<div class="flex flex-col gap-10">
+<div class="flex flex-col gap-3 text-center md:text-left">
+<h2 class="text-primary text-3xl font-bold leading-tight tracking-tight">
+                            Our Safety Guarantee
+                        </h2>
+<p class="text-[#647187] text-lg font-normal leading-normal max-w-[720px]">
+                            We prioritize your anonymity and security above all else. Our platform is built on a foundation of zero-trust architecture.
+                        </p>
+</div>
+<div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
+<!-- Feature 1 -->
+<div class="flex flex-col gap-4 rounded-xl border border-[#e5e7eb] bg-background-light p-6 transition-transform hover:-translate-y-1">
+<div class="text-primary">
+<span class="material-symbols-outlined text-[32px]">visibility_off</span>
+</div>
+<div class="flex flex-col gap-2">
+<h3 class="text-[#111417] text-lg font-bold leading-tight">100% Anonymous</h3>
+<p class="text-[#647187] text-sm font-normal leading-relaxed">Your identity is stripped from the metadata before it ever reaches the server.</p>
+</div>
+</div>
+<!-- Feature 2 -->
+<div class="flex flex-col gap-4 rounded-xl border border-[#e5e7eb] bg-background-light p-6 transition-transform hover:-translate-y-1">
+<div class="text-primary">
+<span class="material-symbols-outlined text-[32px]">lock</span>
+</div>
+<div class="flex flex-col gap-2">
+<h3 class="text-[#111417] text-lg font-bold leading-tight">End-to-End Encrypted</h3>
+<p class="text-[#647187] text-sm font-normal leading-relaxed">Reports are encrypted from your device to our servers using AES-256 standards.</p>
+</div>
+</div>
+<!-- Feature 3 -->
+<div class="flex flex-col gap-4 rounded-xl border border-[#e5e7eb] bg-background-light p-6 transition-transform hover:-translate-y-1">
+<div class="text-primary">
+<span class="material-symbols-outlined text-[32px]">vpn_lock</span>
+</div>
+<div class="flex flex-col gap-2">
+<h3 class="text-[#111417] text-lg font-bold leading-tight">No IP Logging</h3>
+<p class="text-[#647187] text-sm font-normal leading-relaxed">We do not track your location, IP address, or device information at any point.</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Illustration / Context Section -->
+<section class="w-full flex justify-center py-16 bg-background-light">
+<div class="layout-content-container flex flex-col w-full max-w-[960px] px-4 md:px-10">
+<div class="flex flex-col md:flex-row gap-10 items-center">
+<div class="w-full md:w-1/2 rounded-2xl overflow-hidden shadow-lg h-64 md:h-80 relative">
+<div class="absolute inset-0 bg-primary/10 z-10"></div>
+<img alt="Professional working on a laptop in a clean, modern office environment symbolizing secure reporting" class="w-full h-full object-cover" data-alt="Professional working on a laptop in a clean, modern office environment symbolizing secure reporting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB8soX55R2hbu4o_MbG7tAP3sg802kERoTsDQtxJwavHxkCSM5anu7xWIDCiCinpdJ8BGN1nYqvKrpk13R-AcW5fw4voSns7uR_LMmhEJ2L7Y-VTCCL_vXM0dnUO_MYyh69oRGealvjvmMHHpK-MYt9EiiBO_CIpY4O3Zaey2QFoc4Ge6vV5k7GwC9SzfiwLcFYMnlZNKKEesUhwDIkC7MDUvmpZe_dk10zRuU2bSMR2tr9wvNP3bhYXX-IpYvruxE1xVi8YmAA3jwt"/>
+</div>
+<div class="w-full md:w-1/2 flex flex-col gap-6">
+<h2 class="text-primary text-3xl font-bold leading-tight">Why anonymity matters</h2>
+<div class="flex flex-col gap-4">
+<div class="flex gap-3 items-start">
+<span class="material-symbols-outlined text-primary mt-1">check_circle</span>
+<p class="text-[#647187]"><strong>Encourages Transparency:</strong> Employees feel safer reporting critical issues without fear of retaliation.</p>
+</div>
+<div class="flex gap-3 items-start">
+<span class="material-symbols-outlined text-primary mt-1">check_circle</span>
+<p class="text-[#647187]"><strong>Early Detection:</strong> Identify risks and misconduct early before they escalate into larger problems.</p>
+</div>
+<div class="flex gap-3 items-start">
+<span class="material-symbols-outlined text-primary mt-1">check_circle</span>
+<p class="text-[#647187]"><strong>Building Trust:</strong> A secure reporting channel demonstrates a commitment to integrity and ethics.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="w-full bg-primary text-white/80 py-12">
+<div class="flex justify-center w-full">
+<div class="layout-content-container flex flex-col max-w-[960px] w-full px-4 md:px-10">
+<div class="flex flex-col md:flex-row justify-between items-center gap-8 border-b border-white/10 pb-8 mb-8">
+<div class="flex items-center gap-3 text-white">
+<span class="material-symbols-outlined text-[24px]">shield</span>
+<h2 class="text-lg font-bold">Report Safe</h2>
+</div>
+<div class="flex flex-wrap items-center justify-center gap-6 md:gap-8">
+<a class="text-sm font-medium hover:text-white transition-colors" href="#">Privacy Policy</a>
+<a class="text-sm font-medium hover:text-white transition-colors" href="#">Terms of Service</a>
+<a class="text-sm font-medium hover:text-white transition-colors" href="#">Security Guide</a>
+</div>
+</div>
+<div class="flex flex-col-reverse md:flex-row justify-between items-center gap-4 text-sm">
+<p>© 2024 Report Safe. All rights reserved.</p>
+<div class="flex items-center gap-2 px-3 py-1 rounded bg-white/10 text-xs font-semibold tracking-wider text-white">
+<span class="material-symbols-outlined text-[16px]">lock</span>
+<span>256-BIT SSL ENCRYPTED</span>
+</div>
+</div>
+</div>
+</div>
+</footer>
+<script>
+    // Add event listeners for navigation buttons
+    document.addEventListener('DOMContentLoaded', function() {
+        // Handle "Start a New Report" button
+        var startReportButton = document.getElementById('startReportButton');
+        if (startReportButton) {
+            startReportButton.addEventListener('click', function() {
+                window.location.href = 'report.html';
+            });
+        }
+        
+        // Handle "Check Status" button
+        var checkStatusButton = document.getElementById('checkStatusButton');
+        if (checkStatusButton) {
+            checkStatusButton.addEventListener('click', function() {
+                window.location.href = 'status.html';
+            });
+        }
+    });
+</script>
+</div>
+</body>
+</html>

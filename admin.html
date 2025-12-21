@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Report Safe - Admin Dashboard</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#175acf",
+                        "primary-dark": "#10429a",
+                        "background-light": "#f6f7f8",
+                        "background-dark": "#111721",
+                        "surface-light": "#ffffff",
+                        "surface-dark": "#1c2431",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"],
+                        "body": ["Inter", "sans-serif"],
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        /* Custom scrollbar for better aesthetics */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent; 
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1; 
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8; 
+        }
+        .dark ::-webkit-scrollbar-thumb {
+            background: #334155; 
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-[#111418] dark:text-gray-100 min-h-screen flex flex-col overflow-hidden">
+<!-- Login View (Visually hidden for demo purposes if we want to show dashboard directly, but request implies features. 
+         I will create a split layout or a toggle. Since it's a single page output, I will render the Dashboard as the main view 
+         and put the Login screen in a 'modal' overlay that is hidden by default, or just assume the user is logged in.
+         However, the prompt asks for "A login section... leading to a dashboard". 
+         I will simulate the dashboard view primarily as it's the core request, but I'll add the login container 
+         hidden by default or as a separate section below for completeness if needed. 
+         Actually, a better approach for a static design is to show the Dashboard, as it's the more complex UI. 
+         I will prioritize the Dashboard structure. -->
+<div class="flex h-screen w-full overflow-hidden">
+<!-- Sidebar Navigation -->
+<aside class="w-64 bg-surface-light dark:bg-surface-dark border-r border-[#dcdfe5] dark:border-gray-700 flex flex-col shrink-0 z-20">
+<div class="h-16 flex items-center px-6 border-b border-[#dcdfe5] dark:border-gray-700">
+<div class="flex items-center gap-3 text-primary">
+<span class="material-symbols-outlined text-2xl">shield_person</span>
+<span class="text-lg font-bold tracking-tight text-[#111418] dark:text-white">Report Safe</span>
+</div>
+</div>
+<nav class="flex-1 overflow-y-auto py-6 px-3 space-y-1">
+<a class="flex items-center gap-3 px-3 py-3 rounded-lg bg-primary/10 text-primary font-medium" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+                    Reports View
+                </a>
+<a class="flex items-center gap-3 px-3 py-3 rounded-lg text-[#637088] hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-800 transition-colors font-medium" href="#">
+<span class="material-symbols-outlined">mail</span>
+                    Messages
+                    <span class="ml-auto bg-red-500 text-white text-xs font-bold px-2 py-0.5 rounded-full">3</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-3 rounded-lg text-[#637088] hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-800 transition-colors font-medium" href="#">
+<span class="material-symbols-outlined">history</span>
+                    Audit Logs
+                </a>
+<a class="flex items-center gap-3 px-3 py-3 rounded-lg text-[#637088] hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-800 transition-colors font-medium" href="#">
+<span class="material-symbols-outlined">settings</span>
+                    Settings
+                </a>
+</nav>
+<div class="p-4 border-t border-[#dcdfe5] dark:border-gray-700">
+<button class="flex items-center gap-3 w-full px-3 py-2 text-[#637088] hover:text-[#111418] dark:text-gray-400 dark:hover:text-white transition-colors font-medium">
+<span class="material-symbols-outlined">logout</span>
+                    Logout
+                </button>
+</div>
+</aside>
+<!-- Main Content Area -->
+<main class="flex-1 flex flex-col relative min-w-0 bg-background-light dark:bg-background-dark">
+<!-- Top Header -->
+<header class="h-16 bg-surface-light dark:bg-surface-dark border-b border-[#dcdfe5] dark:border-gray-700 flex items-center justify-between px-8 shrink-0">
+<h1 class="text-xl font-bold text-[#111418] dark:text-white">Dashboard Overview</h1>
+<div class="flex items-center gap-4">
+<button class="text-[#637088] dark:text-gray-400 hover:text-primary transition-colors">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<div class="h-8 w-[1px] bg-[#dcdfe5] dark:bg-gray-700 mx-2"></div>
+<div class="flex items-center gap-3">
+<div class="text-right hidden sm:block">
+<p class="text-sm font-bold text-[#111418] dark:text-white leading-none">Sarah Jenkins</p>
+<p class="text-xs text-[#637088] dark:text-gray-400 mt-1">Compliance Officer</p>
+</div>
+<div class="h-10 w-10 rounded-full bg-gray-200 bg-cover bg-center border border-gray-300 dark:border-gray-600" data-alt="Profile picture of a professional woman" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCyqLSRzuXI05hL2IQzvY_3Y0r06s_WLgMeJm_jGO6M1INikGNnG_EBwUW0p7cEtuPlQb8jYy51ImxCZFSNILmkgBJwvm0qK71Zh6eWnAM3njBQUxHQb8_O4i3jXm3weyYVuu9hUICoZ3b3Mot-AvHNdeYFT5VtPi-Ikc_TyV9101SDII4m_oggAG27jCzTmS-cTVXUtSh9YJeHbOY1ZUGsPy7xX-OSZYNGgqPpNThJ4H7SUipkTcp_7xr5nfk7aL7n95eyDZMuw3v9')"></div>
+</div>
+</div>
+</header>
+<!-- Scrollable Content -->
+<div class="flex-1 overflow-y-auto p-8">
+<!-- Stats Row -->
+<div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+<div class="bg-surface-light dark:bg-surface-dark p-5 rounded-xl border border-[#dcdfe5] dark:border-gray-700 shadow-sm flex flex-col">
+<p class="text-[#637088] dark:text-gray-400 text-sm font-medium">New Reports</p>
+<div class="flex items-end justify-between mt-2">
+<h3 class="text-3xl font-bold text-[#111418] dark:text-white">12</h3>
+<span class="text-green-600 text-sm font-medium flex items-center bg-green-50 dark:bg-green-900/20 px-2 py-1 rounded">
+<span class="material-symbols-outlined text-sm mr-1">trending_up</span> +2 today
+                            </span>
+</div>
+</div>
+<div class="bg-surface-light dark:bg-surface-dark p-5 rounded-xl border border-[#dcdfe5] dark:border-gray-700 shadow-sm flex flex-col">
+<p class="text-[#637088] dark:text-gray-400 text-sm font-medium">In Progress</p>
+<div class="flex items-end justify-between mt-2">
+<h3 class="text-3xl font-bold text-[#111418] dark:text-white">8</h3>
+</div>
+</div>
+<div class="bg-surface-light dark:bg-surface-dark p-5 rounded-xl border border-[#dcdfe5] dark:border-gray-700 shadow-sm flex flex-col">
+<p class="text-[#637088] dark:text-gray-400 text-sm font-medium">Average Resolution</p>
+<div class="flex items-end justify-between mt-2">
+<h3 class="text-3xl font-bold text-[#111418] dark:text-white">4.2 <span class="text-base font-normal text-[#637088] dark:text-gray-400">days</span></h3>
+</div>
+</div>
+<div class="bg-surface-light dark:bg-surface-dark p-5 rounded-xl border border-[#dcdfe5] dark:border-gray-700 shadow-sm flex flex-col">
+<p class="text-[#637088] dark:text-gray-400 text-sm font-medium">Critical Issues</p>
+<div class="flex items-end justify-between mt-2">
+<h3 class="text-3xl font-bold text-red-600">3</h3>
+<span class="text-red-600 text-sm font-medium flex items-center bg-red-50 dark:bg-red-900/20 px-2 py-1 rounded">Action Needed</span>
+</div>
+</div>
+</div>
+<!-- Reports Table Section -->
+<div class="bg-surface-light dark:bg-surface-dark rounded-xl border border-[#dcdfe5] dark:border-gray-700 shadow-sm overflow-hidden flex flex-col">
+<div class="p-5 border-b border-[#dcdfe5] dark:border-gray-700 flex flex-wrap gap-4 justify-between items-center">
+<h2 class="text-lg font-bold text-[#111418] dark:text-white">Recent Reports</h2>
+<div class="flex gap-3">
+<div class="relative">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-[#637088]">search</span>
+<input class="pl-10 pr-4 py-2 bg-background-light dark:bg-background-dark border border-[#dcdfe5] dark:border-gray-600 rounded-lg text-sm focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary w-64 text-[#111418] dark:text-white" placeholder="Search cases..." type="text"/>
+</div>
+<button class="flex items-center gap-2 px-4 py-2 border border-[#dcdfe5] dark:border-gray-600 rounded-lg text-sm font-medium hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors dark:text-white">
+<span class="material-symbols-outlined text-lg">filter_list</span> Filter
+                            </button>
+</div>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-background-light dark:bg-background-dark text-[#637088] dark:text-gray-400 text-xs uppercase tracking-wider font-semibold">
+<th class="px-6 py-4">Case ID</th>
+<th class="px-6 py-4">Category</th>
+<th class="px-6 py-4">Date Submitted</th>
+<th class="px-6 py-4">Priority</th>
+<th class="px-6 py-4">Status</th>
+<th class="px-6 py-4 text-right">Action</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-[#dcdfe5] dark:divide-gray-700 text-sm">
+<!-- Row 1 -->
+<tr class="hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-colors group cursor-pointer">
+<td class="px-6 py-4 font-medium text-primary">#CASE-4921</td>
+<td class="px-6 py-4 text-[#111418] dark:text-gray-200">Harassment</td>
+<td class="px-6 py-4 text-[#637088] dark:text-gray-400">Oct 24, 2023</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-300">
+<span class="w-1.5 h-1.5 rounded-full bg-red-600"></span> High
+                                        </span>
+</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-300">New</span>
+</td>
+<td class="px-6 py-4 text-right">
+<span class="material-symbols-outlined text-[#637088] hover:text-primary">chevron_right</span>
+</td>
+</tr>
+<!-- Row 2 -->
+<tr class="hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-colors group cursor-pointer bg-blue-50/30 dark:bg-blue-900/10">
+<td class="px-6 py-4 font-medium text-primary">#CASE-4920</td>
+<td class="px-6 py-4 text-[#111418] dark:text-gray-200">Safety Violation</td>
+<td class="px-6 py-4 text-[#637088] dark:text-gray-400">Oct 23, 2023</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800 dark:bg-yellow-900/30 dark:text-yellow-300">
+<span class="w-1.5 h-1.5 rounded-full bg-yellow-600"></span> Medium
+                                        </span>
+</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-purple-100 text-purple-800 dark:bg-purple-900/30 dark:text-purple-300">Investigating</span>
+</td>
+<td class="px-6 py-4 text-right">
+<span class="material-symbols-outlined text-[#637088] hover:text-primary">chevron_right</span>
+</td>
+</tr>
+<!-- Row 3 -->
+<tr class="hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-colors group cursor-pointer">
+<td class="px-6 py-4 font-medium text-primary">#CASE-4919</td>
+<td class="px-6 py-4 text-[#111418] dark:text-gray-200">Misconduct</td>
+<td class="px-6 py-4 text-[#637088] dark:text-gray-400">Oct 21, 2023</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium bg-gray-100 text-gray-800 dark:bg-gray-800 dark:text-gray-300">
+<span class="w-1.5 h-1.5 rounded-full bg-gray-600"></span> Low
+                                        </span>
+</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-300">Resolved</span>
+</td>
+<td class="px-6 py-4 text-right">
+<span class="material-symbols-outlined text-[#637088] hover:text-primary">chevron_right</span>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="p-4 border-t border-[#dcdfe5] dark:border-gray-700 flex justify-between items-center text-sm text-[#637088] dark:text-gray-400">
+<span>Showing 1-3 of 24 reports</span>
+<div class="flex gap-2">
+<button class="px-3 py-1 border border-[#dcdfe5] dark:border-gray-700 rounded hover:bg-gray-50 dark:hover:bg-gray-800 disabled:opacity-50" disabled="">Previous</button>
+<button class="px-3 py-1 border border-[#dcdfe5] dark:border-gray-700 rounded hover:bg-gray-50 dark:hover:bg-gray-800">Next</button>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- Report Detail Panel (Slide-Over) -->
+<!-- In a real app this would toggle. For this design, I'll position it absolutely on the right to simulate the 'open' state for the design. -->
+<aside class="w-[480px] bg-surface-light dark:bg-surface-dark border-l border-[#dcdfe5] dark:border-gray-700 flex flex-col shadow-xl z-30 absolute right-0 top-0 bottom-0 h-full">
+<div class="flex items-center justify-between px-6 py-4 border-b border-[#dcdfe5] dark:border-gray-700">
+<div>
+<h2 class="text-lg font-bold text-[#111418] dark:text-white">Report Details</h2>
+<p class="text-xs text-[#637088] dark:text-gray-400">Case ID: #CASE-4920</p>
+</div>
+<button class="h-8 w-8 flex items-center justify-center rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
+<span class="material-symbols-outlined text-[#637088]">close</span>
+</button>
+</div>
+<div class="flex-1 overflow-y-auto p-6 space-y-6">
+<!-- Status Card -->
+<div class="bg-background-light dark:bg-background-dark p-4 rounded-lg border border-[#dcdfe5] dark:border-gray-700">
+<label class="block text-xs font-semibold text-[#637088] dark:text-gray-400 uppercase mb-2">Current Status</label>
+<div class="flex gap-3">
+<select class="form-select block w-full rounded-md border-gray-300 dark:border-gray-600 bg-white dark:bg-surface-dark text-sm focus:border-primary focus:ring focus:ring-primary/20 dark:text-white">
+<option>New</option>
+<option selected="">Investigating</option>
+<option>Resolved</option>
+<option>Dismissed</option>
+</select>
+<button class="px-4 py-2 bg-primary text-white text-sm font-bold rounded-md hover:bg-primary-dark transition-colors">Update</button>
+</div>
+</div>
+<!-- Report Content -->
+<div>
+<h3 class="text-sm font-bold text-[#111418] dark:text-white mb-2">Incident Description</h3>
+<div class="bg-gray-50 dark:bg-gray-800/50 p-4 rounded-lg text-sm text-[#111418] dark:text-gray-200 leading-relaxed border border-[#dcdfe5] dark:border-gray-700">
+<p class="mb-2">I witnessed a serious safety violation in the warehouse sector B on Monday morning. Several heavy pallets were stacked improperly and were leaning dangerously over the walkway.</p>
+<p>When I mentioned it to the shift supervisor, they dismissed my concerns. This is a recurring issue that needs to be addressed before someone gets hurt.</p>
+</div>
+</div>
+<!-- Metadata -->
+<div class="grid grid-cols-2 gap-4">
+<div>
+<h4 class="text-xs font-semibold text-[#637088] dark:text-gray-400 mb-1">Category</h4>
+<p class="text-sm font-medium text-[#111418] dark:text-white">Safety Violation</p>
+</div>
+<div>
+<h4 class="text-xs font-semibold text-[#637088] dark:text-gray-400 mb-1">Date Submitted</h4>
+<p class="text-sm font-medium text-[#111418] dark:text-white">Oct 23, 2023 at 09:14 AM</p>
+</div>
+<div>
+<h4 class="text-xs font-semibold text-[#637088] dark:text-gray-400 mb-1">Location</h4>
+<p class="text-sm font-medium text-[#111418] dark:text-white">Warehouse Sector B</p>
+</div>
+<div>
+<h4 class="text-xs font-semibold text-[#637088] dark:text-gray-400 mb-1">Involved Parties</h4>
+<p class="text-sm font-medium text-[#111418] dark:text-white">Shift Supervisor (Unspecified)</p>
+</div>
+</div>
+<!-- Evidence -->
+<div>
+<h3 class="text-sm font-bold text-[#111418] dark:text-white mb-3">Evidence Attachments</h3>
+<div class="grid grid-cols-2 gap-3">
+<div class="group relative aspect-video bg-gray-200 rounded-lg overflow-hidden cursor-pointer">
+<img alt="Stacked boxes in warehouse" class="w-full h-full object-cover opacity-90 group-hover:opacity-100 transition-opacity" data-alt="Stacked boxes in warehouse showing safety hazard" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBHnrk_yxV6CSm7QoBgD0TGioqA_U_opwK31hHn1zZxawWoj_xWh6EpFrrgK3-x8-foIncFCTC7cUSBBJdc_9qyTj10k3HLOl9tU-TtecL4Lq-igblhw0B1Qjp8Q3lbtvjsKYyH1xqYr5mKQ5SEW0uPCLCkUdlKtRAGCi7mjTVLXePGEcFzvbA_JEppYQYovNq8h8GYP_2DYre71qOLvGj1SgRN8J3DTK_g4L348NQ4SB9H4TVmvKRbsrvXyjYDH8PMlNhhCwAY-DGz"/>
+<div class="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+<span class="material-symbols-outlined text-white">visibility</span>
+</div>
+</div>
+<div class="flex items-center justify-center border-2 border-dashed border-[#dcdfe5] dark:border-gray-600 rounded-lg bg-background-light dark:bg-background-dark text-[#637088] text-xs">
+                            No other files
+                        </div>
+</div>
+</div>
+<hr class="border-[#dcdfe5] dark:border-gray-700"/>
+<!-- Reply Section -->
+<div>
+<div class="flex items-center justify-between mb-2">
+<h3 class="text-sm font-bold text-[#111418] dark:text-white">Reply to Reporter</h3>
+<span class="text-xs text-green-600 font-medium flex items-center bg-green-50 dark:bg-green-900/20 px-2 py-0.5 rounded">
+<span class="material-symbols-outlined text-[14px] mr-1">lock</span> Secure &amp; Anonymous
+                        </span>
+</div>
+<textarea class="w-full h-32 p-3 rounded-lg border border-[#dcdfe5] dark:border-gray-600 bg-white dark:bg-surface-dark text-sm placeholder:text-[#637088] focus:border-primary focus:ring-1 focus:ring-primary resize-none dark:text-white" placeholder="Type your response here. The reporter will be notified but your identity remains protected..."></textarea>
+<div class="flex items-center justify-between mt-3">
+<label class="flex items-center gap-2 cursor-pointer">
+<input class="rounded border-gray-300 text-primary focus:ring-primary" type="checkbox"/>
+<span class="text-xs text-[#637088] dark:text-gray-400">Mark as 'Action Required' for reporter</span>
+</label>
+<button class="px-5 py-2.5 bg-[#175acf] text-white text-sm font-bold rounded-lg hover:bg-blue-700 transition-colors shadow-sm flex items-center gap-2">
+                            Send Update
+                            <span class="material-symbols-outlined text-lg">send</span>
+</button>
+</div>
+<p class="mt-2 text-[10px] text-[#637088] dark:text-gray-500 text-center">
+                        This message will be encrypted and stored in the audit log.
+                    </p>
+</div>
+</div>
+</aside>
+</div>
+<!-- Login Modal (Overlay) - Showcasing the Login Requirement -->
+<!-- Initially hidden with 'hidden' class, remove to see. Included for completeness of the prompt's requirements -->
+<div class="hidden fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-center justify-center p-4">
+<div class="bg-surface-light dark:bg-surface-dark w-full max-w-[440px] rounded-2xl shadow-2xl overflow-hidden flex flex-col">
+<div class="px-8 pt-10 pb-6 flex flex-col items-center">
+<div class="h-12 w-12 bg-primary/10 rounded-full flex items-center justify-center mb-4 text-primary">
+<span class="material-symbols-outlined text-3xl">shield_person</span>
+</div>
+<h2 class="text-2xl font-bold text-[#111418] dark:text-white tracking-tight">Admin Portal Access</h2>
+<p class="text-[#637088] dark:text-gray-400 text-sm mt-2 text-center">Please verify your credentials to access sensitive reports.</p>
+</div>
+<div class="px-8 pb-10 flex flex-col gap-5">
+<label class="flex flex-col gap-1.5">
+<span class="text-sm font-medium text-[#111418] dark:text-gray-200">Email Address</span>
+<input class="form-input w-full rounded-lg border border-[#dcdfe5] dark:border-gray-600 bg-white dark:bg-background-dark h-12 px-4 text-base focus:border-primary focus:ring-primary dark:text-white" placeholder="admin@reportsafe.com" type="email" value="s.jenkins@reportsafe.com"/>
+</label>
+<label class="flex flex-col gap-1.5">
+<div class="flex justify-between items-center">
+<span class="text-sm font-medium text-[#111418] dark:text-gray-200">Password</span>
+<a class="text-xs font-medium text-primary hover:text-primary-dark" href="#">Forgot password?</a>
+</div>
+<input class="form-input w-full rounded-lg border border-[#dcdfe5] dark:border-gray-600 bg-white dark:bg-background-dark h-12 px-4 text-base focus:border-primary focus:ring-primary dark:text-white" placeholder="••••••••" type="password" value="password123"/>
+</label>
+<button class="w-full bg-primary hover:bg-primary-dark text-white font-bold h-12 rounded-lg mt-2 transition-colors shadow-lg shadow-blue-500/20">
+                    Log In to Dashboard
+                </button>
+</div>
+<div class="bg-gray-50 dark:bg-gray-800/50 px-8 py-4 border-t border-[#dcdfe5] dark:border-gray-700 text-center">
+<p class="text-xs text-[#637088] dark:text-gray-500 flex items-center justify-center gap-1">
+<span class="material-symbols-outlined text-sm">lock</span>
+                    256-bit End-to-End Encryption
+                </p>
+</div>
+</div>
+</div>
+<script src="admin.js"></script>
+<script src="navigation.js"></script>
+</body></html>
