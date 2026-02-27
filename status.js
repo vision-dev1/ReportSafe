@@ -1,3 +1,5 @@
+// Codes By Visionnn
+
 // status.ts - Status page functionality
 
 // Wait for DOM to load
